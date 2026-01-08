@@ -33,6 +33,25 @@ def analisis():
     })
 
 
+# endpoint para enviarle texto sjsjsjs skere modo diablo
+@app.route("/analisis_texto", methods=["POST"])
+def analisis_texto():
+    data = request.get_json()
+    texto = data.get("texto")
+
+    model = GPT4All("Llama-3.2-1B-Instruct-Q4_0.gguf")  #si es la primerva vez te lo descarga
+
+    print("Preguntando al chatbot")
+
+    respuesta = ""
+    with model.chat_session():
+        respuesta = model.generate(texto, max_tokens=1024)
+    
+    return jsonify({
+        "mensaje": respuesta,
+    })
+
+
 def principal_analisis(ventas):
     # Cargar ventas (2025)
     #ventas = pd.read_csv("Pruebas/ventas_2025.csv")
